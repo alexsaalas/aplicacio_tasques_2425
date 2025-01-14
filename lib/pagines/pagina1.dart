@@ -1,3 +1,4 @@
+import 'package:aplicacio_tasques_2425/componentes/dialog_nova_tasca.dart';
 import 'package:aplicacio_tasques_2425/componentes/item_tasques.dart';
 import 'package:flutter/material.dart';
 
@@ -17,9 +18,9 @@ class _MyWidgetState extends State<Pagina1> {
   ];
 
   void canviaCheckbox(int posLlista) {
-    //* Para actualizar la pantalla 
+    //* Para actualizar la pantalla
     setState(() {
-      //* ! =  es no true 
+      //* ! =  es no true
       tasquesLlista[posLlista]["valor"] = !tasquesLlista[posLlista]["valor"];
     });
   }
@@ -28,6 +29,15 @@ class _MyWidgetState extends State<Pagina1> {
     setState(() {
       tasquesLlista.removeAt(posLlista);
     });
+  }
+
+  void CrearNovaTasca() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return DialogNovaTasca();
+      },
+    );
   }
 
   @override
@@ -40,28 +50,23 @@ class _MyWidgetState extends State<Pagina1> {
         backgroundColor: Colors.teal,
         title: const Text(
           "App Tasques",
-          style: TextStyle(color: Colors.orange), // Cambié esto aquí
+          style: TextStyle(color: Colors.orange),
         ),
       ),
       //* FloatingActionButton = BOTON ABAJO DE LA DERECHA
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.teal[300],
         shape: const CircleBorder(),
-        onPressed: () {
-          // Agregar nueva tarea (podrías agregar lógica aquí)
-        },
+        onPressed: CrearNovaTasca, // Aquí solo tienes un onPressed
         child: const Icon(
           Icons.add,
-          color: Colors.orange, // Cambié el color aquí también
+          color: Colors.orange,
         ),
       ),
 
       //* Body
       body: ListView.builder(
-        //* Cuantos items habrán
         itemCount: tasquesLlista.length,
-        //* Recibe una funcion anónima
-        //* El index recorre la lista, es como la i de un for
         itemBuilder: (context, index) {
           return ItemTasques(
             textTasca: tasquesLlista[index]["titol"],
