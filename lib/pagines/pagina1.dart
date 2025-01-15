@@ -17,6 +17,23 @@ class _MyWidgetState extends State<Pagina1> {
     {"titol": "Tasca 3", "valor": true},
   ];
 
+  TextEditingController tecTextTasca = TextEditingController();
+
+  void accioGuardar() {
+    setState(() {
+      tasquesLlista.add({
+        "titol": tecTextTasca.text, // Añadimos el texto de la tarea
+        "valor": false, // Inicializamos con valor false
+      });
+    });
+    accioCancelar();
+  }
+
+  void accioCancelar() {
+    Navigator.of(context).pop();
+    tecTextTasca.clear();
+  }
+
   void canviaCheckbox(int posLlista) {
     //* Para actualizar la pantalla
     setState(() {
@@ -35,7 +52,11 @@ class _MyWidgetState extends State<Pagina1> {
     showDialog(
       context: context,
       builder: (context) {
-        return DialogNovaTasca();
+        return DialogNovaTasca(
+          tecTextTasca: tecTextTasca,
+          accioGuardar: accioGuardar,
+          accioCancelar: accioCancelar,
+        );
       },
     );
   }
