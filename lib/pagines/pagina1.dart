@@ -22,6 +22,18 @@ class _MyWidgetState extends State<Pagina1> {
 
   final Box _boxHive = Hive.box("box_tasques_app");
   BaseDeDades db = BaseDeDades();
+
+  @override
+  void initState() {
+    // mirar si existen datos y si no existen añadirlos
+    if (_boxHive.get("box_tasques_app") == null) {
+      db.crearDadesExemple();
+    } else {
+      db.CargarDades();
+    }
+    super.initState();
+  }
+
   TextEditingController tecTextTasca = TextEditingController();
 
   void accioGuardar() {
@@ -43,7 +55,8 @@ class _MyWidgetState extends State<Pagina1> {
     //* Para actualizar la pantalla
     setState(() {
       //* ! =  es no true
-      db.tasquesLlista[posLlista]["valor"] = !db.tasquesLlista[posLlista]["valor"];
+      db.tasquesLlista[posLlista]["valor"] =
+          !db.tasquesLlista[posLlista]["valor"];
       db.actualizarDades();
     });
   }
@@ -68,6 +81,7 @@ class _MyWidgetState extends State<Pagina1> {
     );
   }
 
+  // Metodo definido de la clase PaginaPrincipal
   @override
   Widget build(BuildContext context) {
     //* Scaffold
