@@ -1,6 +1,8 @@
 import 'package:aplicacio_tasques_2425/componentes/dialog_nova_tasca.dart';
 import 'package:aplicacio_tasques_2425/componentes/item_tasques.dart';
+import 'package:aplicacio_tasques_2425/data/base_de_dades.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 
 class Pagina1 extends StatefulWidget {
   const Pagina1({super.key});
@@ -11,17 +13,20 @@ class Pagina1 extends StatefulWidget {
 
 class _MyWidgetState extends State<Pagina1> {
   //* Listas
-  List tasquesLlista = [
+  /* List tasquesLlista = [
+   
     {"titol": "Tasca 1", "valor": false},
     {"titol": "Tasca 2", "valor": true},
     {"titol": "Tasca 3", "valor": true},
-  ];
+  ];*/
 
+  final Box _boxHive = Hive.box("box_tasques_app");
+  BaseDeDades db = BaseDeDades();
   TextEditingController tecTextTasca = TextEditingController();
 
   void accioGuardar() {
     setState(() {
-      tasquesLlista.add({
+      db.tasquesLlista.add({
         "titol": tecTextTasca.text, // Añadimos el texto de la tarea
         "valor": false, // Inicializamos con valor false
       });
@@ -38,14 +43,16 @@ class _MyWidgetState extends State<Pagina1> {
     //* Para actualizar la pantalla
     setState(() {
       //* ! =  es no true
-      tasquesLlista[posLlista]["valor"] = !tasquesLlista[posLlista]["valor"];
+      db.tasquesLlista[posLlista]["valor"] = !db.tasquesLlista[posLlista]["valor"];
+      db.actualizarDades();
     });
   }
 
   void accioEsborraTasca(int posLlista) {
     setState(() {
-      tasquesLlista.removeAt(posLlista);
+      db.tasquesLlista.removeAt(posLlista);
     });
+    db.actualizarDades();
   }
 
   void CrearNovaTasca() {
@@ -87,11 +94,11 @@ class _MyWidgetState extends State<Pagina1> {
 
       //* Body
       body: ListView.builder(
-        itemCount: tasquesLlista.length,
+        itemCount: db.tasquesLlista.length,
         itemBuilder: (context, index) {
           return ItemTasques(
-            textTasca: tasquesLlista[index]["titol"],
-            valorCheckbox: tasquesLlista[index]["valor"],
+            textTasca: db.tasquesLlista[index]["titol"],
+            valorCheckbox: db.tasquesLlista[index]["valor"],
             canviaValorCheckbox: (valor) => canviaCheckbox(index),
             esborraTasca: (valor) => accioEsborraTasca(index),
           );

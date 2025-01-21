@@ -1,9 +1,14 @@
 import 'package:aplicacio_tasques_2425/pagines/pagina1.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
-void main() {
+Future<void> main() async {
+  await Hive.initFlutter();
+  await Hive.openBox("box_tasques_app");
   runApp(const MainApp());
 }
+
 
 class MainApp extends StatelessWidget {
   const MainApp({super.key});

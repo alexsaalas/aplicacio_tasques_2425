@@ -33,15 +33,18 @@ class DialogNovaTasca extends StatelessWidget {
               ),
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly, // Alineamos los botones
+              mainAxisAlignment:
+                  MainAxisAlignment.spaceEvenly, // Alineamos los botones
               children: [
                 BotoDialog(
                   TextBoton: "Guardar",
-                  accioBoto: accioGuardar, // Ejecutamos la función cuando se presiona el botón
+                  accioBoto:
+                      accioGuardar, // Ejecutamos la función cuando se presiona el botón
                 ),
                 BotoDialog(
                   TextBoton: "Cancelar",
-                  accioBoto: accioCancelar, // Ejecutamos la función cuando se presiona el botón
+                  accioBoto:
+                      accioCancelar, // Ejecutamos la función cuando se presiona el botón
                 ),
               ],
             )
